@@ -102,50 +102,53 @@
 
 <script>
   function generateTattooPrompt() {
-    var generationType = document.getElementById('generationType').value;
-    var tattooLocation = document.getElementById('tattooLocation').value;
-    var tattooStyle = document.getElementById('tattooStyle').value;
-    var customInput = document.getElementById('customInput').value;
+  var generationType = document.getElementById('generationType').value;
+  var tattooLocation = document.getElementById('tattooLocation').value;
+  var tattooStyle = document.getElementById('tattooStyle').value;
+  var customInput = document.getElementById('customInput').value;
 
-    var promptToMidjourney = '';
+  var promptToMidjourney = '';
 
-    // Generowanie promptu na podstawie wybranych opcji
-    if (generationType === 'a') {
-      promptToMidjourney += 'Generate a tattoo design';
-    } else if (generationType === 'b') {
-      promptToMidjourney += 'Generate a graphic design for tattoo artist';
-    }
-
-    if (customInput !== '') {
-      promptToMidjourney += ' ' + customInput;
-    } else {
-      promptToMidjourney += ' ' + tattooLocation + ' in ' + tattooStyle + ' style.';
-    }
-
-    // Tutaj możesz wykonać dodatkowe operacje na promptToMidjourney, aby dostosować go do midjourney
-
-    // Wyślij promptToMidjourney do serwera Discord za pomocą webhooka
-    sendToDiscordWebhook(promptToMidjourney);
+  // Generowanie promptu na podstawie wybranych opcji
+  if (generationType === 'a') {
+    promptToMidjourney += 'Generate a tattoo design';
+  } else if (generationType === 'b') {
+    promptToMidjourney += 'Generate a graphic design for tattoo artist';
   }
 
-  function sendToDiscordWebhook(prompt) {
-    var webhookURL = 'https://discordapp.com/api/webhooks/1121023276181893220/rKEB-IOX1_IMZZLAHFbN4OVEqrL7sTMK7F2UaNcgRhuxSSifflT626jJMgh3KCAnBTEA';
-
-    // Tworzenie obiektu XMLHttpRequest
-    var request = new XMLHttpRequest();
-
-    // Konfiguracja żądania POST na webhookURL
-    request.open('POST', webhookURL, true);
-    request.setRequestHeader('Content-type', 'application/json');
-
-    // Tworzenie payloadu dla webhooka Discord
-    var payload = {
-      content: '/imagine ' + prompt
-    };
-
-    // Wysłanie żądania z payloadem
-    request.send(JSON.stringify(payload));
+  if (customInput !== '') {
+    promptToMidjourney += '\nfor ' + customInput;
+  } else {
+    promptToMidjourney += '\nfor ' + tattooLocation + ' in ' + tattooStyle + ' style.';
   }
+
+  // Wysłanie webhooka do Discorda
+  sendWebhook(promptToMidjourney);
+}
+
+function sendWebhook(prompt) {
+  var webhookURL = 'https://discordapp.com/api/webhooks/1121023276181893220/rKEB-IOX1_IMZZLAHFbN4OVEqrL7sTMK7F2UaNcgRhuxSSifflT626jJMgh3KCAnBTEA';
+
+  // Tworzenie obiektu zawierającego dane webhooka
+  var webhookData = {
+    content: prompt
+  };
+
+  // Wysłanie żądania HTTP POST do webhooka
+  fetch(webhookURL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(webhookData)
+  })
+  .then(function(response) {
+    console.log('Webhook sent successfully');
+  })
+  .catch(function(error) {
+    console.error('Error sending webhook:', error);
+  });
+}
 </script>
 </form>
 </body>
