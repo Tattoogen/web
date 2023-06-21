@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generator Tatuaży</title>
+  <style>
+    /* Animacja dla tytułu */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    h1 {
+      animation: fadeIn 1s ease-in;
+    }
+
+    /* Animacja dla formularza */
+    @keyframes slideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    form {
+      animation: slideIn 1s ease-in;
+    }
+
+    /* Dodatkowe style */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      padding: 20px;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    select, input[type="text"] {
+      width: 300px;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Generator Tatuaży</h1>
+
+  <form>
+    <label for="generationType">Typ Generowania:</label>
+    <select id="generationType">
+      <option value="a">Projekt Tatuażu</option>
+      <option value="b">Grafika</option>
+    </select>
+
+    <br>
+
+    <label for="tattooLocation">Miejsce Tatuażu:</label>
+    <select id="tattooLocation">
+      <option value="a">Ręka/noga mały</option>
+      <option value="b">Ręka/noga duży</option>
+      <option value="c">Klatka piersiowa / plecy mały</option>
+      <option value="d">Klatka Piersiowa / plecy duży</option>
+    </select>
+
+    <br>
+
+    <label for="tattooStyle">Styl Tatuażu:</label>
+    <select id="tattooStyle">
+      <option value="a">Horror</option>
+      <option value="b">Fotorealistyczny</option>
+      <option value="c">Dotwork</option>
+      <option value="d">Floral</option>
+    </select>
+
+    <br>
+
+    <label for="customInput">Co ma zawierać tatuaż? np. Skull, Horse, teletubies (pozostaw poniższe pole puste jeśli AI ma samodzielnie wygenerować tatuaż na podstawie wybranego stylu)</label>
+    <br>
+    <input type="text" id="customInput">
+
+    <br>
+
+    <button onclick="generateTattooPrompt()">Generuj Tatuaż</button>
+
+<script>
+  function generateTattooPrompt() {
+    var generationType = document.getElementById('generationType').value;
+    var tattooLocation = document.getElementById('tattooLocation').value;
+    var tattooStyle = document.getElementById('tattooStyle').value;
+    var customInput = document.getElementById('customInput').value;
+
+    var promptToMidjourney = '';
+
+    // Generowanie promptu na podstawie wybranych opcji
+    if (generationType === 'a') {
+      promptToMidjourney += 'Generate a tattoo design';
+    } else if (generationType === 'b') {
+      promptToMidjourney += 'Generate a graphic design for tattoo artist';
+    }
+
+    if (customInput !== '') {
+      promptToMidjourney += '<br>for ' + customInput;
+    } else {
+      promptToMidjourney += '<br>for ' + tattooLocation + ' in ' + tattooStyle + ' style.';
+    }
+
+    // Tutaj możesz wykonać dodatkowe operacje na promptToMidjourney, aby dostosować go do midjourney
+
+    // Wyświetl promptToMidjourney w oknie dialogowym
+    prompt(promptToMidjourney);
+  }
+</script>
+</form>
+</body>
+</html>
