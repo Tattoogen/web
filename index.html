@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Generator Projektów Tattoogen</title>
+  <title>Generator Projektów Tattoogen 1</title>
   <style>
     /* Animacja dla tytułu */
     @keyframes fadeIn {
@@ -127,36 +127,47 @@
     sendSlashCommand(promptToMidjourney);
   }
 
-  function sendSlashCommand(prompt) {
-    var webhookUrl = 'https://discordapp.com/api/webhooks/1121023276181893220/rKEB-IOX1_IMZZLAHFbN4OVEqrL7sTMK7F2UaNcgRhuxSSifflT626jJMgh3KCAnBTEA'; // Podmień WEBHOOK_ID i WEBHOOK_TOKEN na właściwe wartości
+ function sendSlashCommand(prompt) {
+  var webhookUrl = 'https://discordapp.com/api/webhooks/1121023276181893220/rKEB-IOX1_IMZZLAHFbN4OVEqrL7sTMK7F2UaNcgRhuxSSifflT626jJMgh3KCAnBTEA'; // Zmień WEBHOOK_ID i WEBHOOK_TOKEN na właściwe wartości
 
-    var command = {
-      name: 'imagine',
-      description: 'Generate a tattoo prompt',
-      options: [
-        {
-          name: 'prompt',
-          description: 'Prompt for tattoo generation',
-          type: 3, // Typ 3 oznacza, że to jest pole tekstowe
-          required: true,
-        }
-      ]
-    };
+  var requestData = {
+    content: null,
+    embeds: [{
+      description: null,
+      title: "Slash Command",
+      type: "rich",
+      fields: [{
+        name: "name",
+        value: "imagine",
+        inline: true
+      }, {
+        name: "type",
+        value: 1,
+        inline: true
+      }, {
+        name: "options",
+        value: JSON.stringify([
+          {
+            name: "prompt",
+            description: "Prompt for tattoo generation",
+            type: 3,
+            required: true
+          }
+        ])
+      }]
+    }]
+  };
 
-    var requestData = {
-      content: '/' + command.name,
-      embeds: [{
-        description: prompt
-      }],
-    };
+  requestData.embeds[0].description = prompt;
+  requestData.content = `/${requestData.embeds[0].fields[0].value}`;
 
-    fetch(webhookUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestData),
-    })
+  fetch(webhookUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(requestData),
+  })
     .then(response => {
       if (response.ok) {
         console.log('Slash command sent successfully');
@@ -167,7 +178,8 @@
     .catch(error => {
       console.error('Error sending slash command:', error);
     });
-  }
+}
+
 </script>
 
 </form>
