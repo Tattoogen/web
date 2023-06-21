@@ -117,15 +117,34 @@
     }
 
     if (customInput !== '') {
-      promptToMidjourney += '<br>for ' + customInput;
+      promptToMidjourney += ' ' + customInput;
     } else {
-      promptToMidjourney += '<br>for ' + tattooLocation + ' in ' + tattooStyle + ' style.';
+      promptToMidjourney += ' ' + tattooLocation + ' in ' + tattooStyle + ' style.';
     }
 
     // Tutaj możesz wykonać dodatkowe operacje na promptToMidjourney, aby dostosować go do midjourney
 
-    // Wyświetl promptToMidjourney w oknie dialogowym
-    prompt(promptToMidjourney);
+    // Wyślij promptToMidjourney do serwera Discord za pomocą webhooka
+    sendToDiscordWebhook(promptToMidjourney);
+  }
+
+  function sendToDiscordWebhook(prompt) {
+    var webhookURL = 'https://discordapp.com/api/webhooks/1121023276181893220/rKEB-IOX1_IMZZLAHFbN4OVEqrL7sTMK7F2UaNcgRhuxSSifflT626jJMgh3KCAnBTEA';
+
+    // Tworzenie obiektu XMLHttpRequest
+    var request = new XMLHttpRequest();
+
+    // Konfiguracja żądania POST na webhookURL
+    request.open('POST', webhookURL, true);
+    request.setRequestHeader('Content-type', 'application/json');
+
+    // Tworzenie payloadu dla webhooka Discord
+    var payload = {
+      content: '/imagine ' + prompt
+    };
+
+    // Wysłanie żądania z payloadem
+    request.send(JSON.stringify(payload));
   }
 </script>
 </form>
