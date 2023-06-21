@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Strona z przyciskiem</title>
+  <title>Strona z przyciskiem i promptem</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -10,20 +10,23 @@
   <script>
     $(document).ready(function() {
       $('#sendButton').click(function() {
-        $.ajax({
-          url: 'https://discordapp.com/api/webhooks/1121023276181893220/rKEB-IOX1_IMZZLAHFbN4OVEqrL7sTMK7F2UaNcgRhuxSSifflT626jJMgh3KCAnBTEA', // Zastąp XXXXXXXXXXXXXXXXX adresem webhooka Discorda
-          method: 'POST',
-          data: JSON.stringify({ content: '/imagine' }), // Zastąp '/slash-command' odpowiednim slash-commandem
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          success: function(response) {
-            console.log('Żądanie wysłane pomyślnie!');
-          },
-          error: function(error) {
-            console.error('Wystąpił błąd podczas wysyłania żądania:', error);
-          }
-        });
+        var slashCommand = prompt('Wpisz slash-command, który chcesz wysłać do Discorda:');
+        if (slashCommand) {
+          $.ajax({
+            url: 'https://discord.com/api/webhooks/XXXXXXXXXXXXXXXXX', // Zastąp XXXXXXXXXXXXXXXXX adresem webhooka Discorda
+            method: 'POST',
+            data: JSON.stringify({ content: slashCommand }),
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            success: function(response) {
+              console.log('Żądanie wysłane pomyślnie!');
+            },
+            error: function(error) {
+              console.error('Wystąpił błąd podczas wysyłania żądania:', error);
+            }
+          });
+        }
       });
     });
   </script>
