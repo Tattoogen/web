@@ -13,7 +13,7 @@
         var slashCommand = prompt('Wpisz slash-command, który chcesz wysłać do Discorda:');
         if (slashCommand) {
           $.ajax({
-            url: 'https://discord.com/api/webhooks/XXXXXXXXXXXXXXXXX', // Zastąp XXXXXXXXXXXXXXXXX adresem webhooka Discorda
+            url: 'https://discordapp.com/api/webhooks/1121023276181893220/rKEB-IOX1_IMZZLAHFbN4OVEqrL7sTMK7F2UaNcgRhuxSSifflT626jJMgh3KCAnBTEA', // Zastąp XXXXXXXXXXXXXXXXX adresem webhooka Discorda
             method: 'POST',
             data: JSON.stringify({ content: slashCommand }),
             headers: {
